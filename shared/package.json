@@ -1,0 +1,12 @@
+{
+  "name": "@my-chat-app/shared",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/chat-message.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
