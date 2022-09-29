@@ -1,5 +1,5 @@
 export default interface ChatMessage {
-    id: string,
+    id?: string,
     author: string,
     text: string,
     timeStamp: Date
