@@ -27,7 +27,7 @@ function App() {
       timeStamp: new Date()
     }
     axios.post<ChatMessage[]>("/", message)
-    .then((response) => setMessages(response.data))
+    .then((response) => setMessages(response. data))
   }
 
   return (
