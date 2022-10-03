@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ChatMessage from "@my-chat-app/shared"
 import './App.css';
 import axios from "axios"
-import { Card } from '@mui/material';
+import Navbar from './components/Navbar';
 
   axios.defaults.baseURL = "http://localhost:3001"
 
@@ -13,6 +13,7 @@ import { Card } from '@mui/material';
 function App() {
 
   const [chatMessage, setChatMessage] = useState<string>("")
+  const [userName, setUserName] = useState<string>("")
   const [messages, setMessages] = useState<ChatMessage[]>([])
 
   useEffect(() => {
@@ -22,7 +23,7 @@ function App() {
   const sendMessage = (chatMessage: string): void => {
     const message: ChatMessage = {
       text: chatMessage,
-      author: "Jesper",
+      author: userName,
       timeStamp: new Date()
     }
     axios.post<ChatMessage[]>("/", message)
@@ -31,21 +32,20 @@ function App() {
 
   return (
     <div className='App'>
-            <header className='App-header'>
-      
+
+      <Navbar/>
       {messages && messages.map((singleMessage) => {
         return (
           <div key={singleMessage.id}>
-            {singleMessage.author}  <br/>
-            {singleMessage.text}
+            {singleMessage.author}: {singleMessage.text}
           </div>
         )
       })}
-      </header>
+
       <section>
-        <input type="text" value={chatMessage} onChange={(e) => setChatMessage(e.target.value)}/>
-        <button onClick={(e) => sendMessage(chatMessage)}>Send message</button>
-        
+        <input type="text" placeholder='Username' value={userName} onChange={(e) => setUserName(e.target.value)}/>
+        <input type="text" placeholder="Message" value={chatMessage} onChange={(e) => setChatMessage(e.target.value)}/>
+        <button onClick={(e) => sendMessage(chatMessage)}>Send message</button>  
       </section>
       
     </div>
