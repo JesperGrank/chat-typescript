@@ -1,30 +1,22 @@
 import express, { Application, json, Request, Response } from 'express'
 import cors from 'cors'
-import ChatMessage from "@my-chat-app/shared"
+import dotenv from "dotenv"
 
-import crypto from "crypto"
+import { setupMongoDb } from './models/messages-repository'
+import messageController from './api/message-controller'
+
+dotenv.config()
 
 const app: Application = express()
 app.use(cors())
 app.use(json())
+
 const port: number = parseInt(process.env.SERVER_PORT || "3001")
+const mongoUrl: string = process.env.MONGODB_URL || "mongodb://localhost:27017"
 
-const CHAT_MESSAGES: ChatMessage[] = [{id: "1", author: "Jeppe", text: "Första inlägget", timeStamp: new Date()}, {id: "2", author: "JG", text: "andra inlägg", timeStamp: new Date()}]
+app.use("/", messageController)
 
-app.get('/', (req: Request, res: Response<ChatMessage[]>) => {   
-    res.send(CHAT_MESSAGES)
-})
-
-app.post("/", (req: Request<ChatMessage>, res: Response<ChatMessage[]>) => {
-    const message = req.body
-    message.id = crypto.randomUUID()
-
-    console.log("Sent new message", message)
-    CHAT_MESSAGES.push(message)
-    res.send(CHAT_MESSAGES)
-
-})
-
-app.listen(port, function () {
-    console.log(`App is listening on port ${port} !`)
+app.listen(port, async function () {
+    await setupMongoDb(mongoUrl)
+    console.log(`App is listening on port ${port}`)
 })
