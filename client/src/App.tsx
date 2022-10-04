@@ -34,9 +34,9 @@ function App() {
     <div className='App'>
 
       <Navbar/>
-      {messages && messages.map((singleMessage) => {
+      {messages && messages.map((singleMessage, index) => {
         return (
-          <div key={singleMessage.id}>
+          <div key={index}>
             {singleMessage.author}: {singleMessage.text}
           </div>
         )
