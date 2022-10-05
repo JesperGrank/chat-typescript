@@ -34,10 +34,11 @@ function App() {
     <div className='App'>
 
       <Navbar/>
-      {messages && messages.map((singleMessage) => {
+      {messages && messages.map((singleMessage, index) => {
         return (
-          <div key={singleMessage.id}>
-            {singleMessage.author}: {singleMessage.text}
+          <div key={index}>
+            {singleMessage.author}: {singleMessage.text} <br/>
+            {singleMessage.timeStamp.toString().split('T')[0].substring(0,10)} - {singleMessage.timeStamp.toString().split('T')[1].substring(0, 5)}
           </div>
         )
       })}
