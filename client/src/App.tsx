@@ -37,7 +37,8 @@ function App() {
       {messages && messages.map((singleMessage, index) => {
         return (
           <div key={index}>
-            {singleMessage.author}: {singleMessage.text}
+            {singleMessage.author}: {singleMessage.text} <br/>
+            {singleMessage.timeStamp.toString().split('T')[0].substring(0,10)} - {singleMessage.timeStamp.toString().split('T')[1].substring(0, 5)}
           </div>
         )
       })}
