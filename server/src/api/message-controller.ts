@@ -12,7 +12,11 @@ messageController.get("/", async (req: Request, res: Response<ChatMessage[]>) =>
 })
 
 messageController.post("/", async (req: Request<ChatMessage>, res: Response<ChatMessage[]>) => {
-    res.send(await saveMessageItem(req.body))
+    try{
+        res.send(await saveMessageItem(req.body))
+    } catch (e){
+        res.sendStatus(400)
+    }
     
 })
 
