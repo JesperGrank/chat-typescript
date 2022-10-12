@@ -1,4 +1,4 @@
-import ChatMessage from "@my-chat-app/shared"
+import {ChatMessage} from "@my-chat-app/shared"
 import express, {Request, Response } from "express"
 import { loadAllMessages } from "../models/messages-repository"
 import { saveMessageItem, loadAllMessagesItem } from "../services/messages-service"

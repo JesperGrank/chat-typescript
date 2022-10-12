@@ -1,4 +1,4 @@
-import ChatMessage from "@my-chat-app/shared"
+import {ChatMessage} from "@my-chat-app/shared"
 import {connect, model, Schema} from "mongoose"
 
 const MessageSchema = new Schema({
