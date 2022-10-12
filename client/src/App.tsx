@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ChatMessage from "@my-chat-app/shared"
+import {ChatMessage} from "@my-chat-app/shared"
 import './App.css';
 import axios from "axios"
 import Navbar from './components/Navbar';
