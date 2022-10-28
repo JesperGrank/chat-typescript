@@ -1,8 +1,8 @@
-import ChatMessage from "@my-chat-app/shared";
+import {ChatMessage} from "@my-chat-app/shared";
 import { loadAllMessages, saveMessage } from "../models/messages-repository";
 
 export const saveMessageItem = async (message: ChatMessage): Promise<ChatMessage[]> => {
-    if(!message.text || message.text == ""){
+    if(!message.author || message.author == "" || !message.text || message.text == ""){
         throw new Error("Invalid text or message")
     }
 

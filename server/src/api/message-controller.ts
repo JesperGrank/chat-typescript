@@ -1,4 +1,4 @@
-import ChatMessage from "@my-chat-app/shared"
+import {ChatMessage} from "@my-chat-app/shared"
 import express, {Request, Response } from "express"
 import { loadAllMessages } from "../models/messages-repository"
 import { saveMessageItem, loadAllMessagesItem } from "../services/messages-service"
@@ -12,7 +12,11 @@ messageController.get("/", async (req: Request, res: Response<ChatMessage[]>) =>
 })
 
 messageController.post("/", async (req: Request<ChatMessage>, res: Response<ChatMessage[]>) => {
-    res.send(await saveMessageItem(req.body))
+    try{
+        res.send(await saveMessageItem(req.body))
+    } catch (e){
+        res.sendStatus(400)
+    }
     
 })
 
