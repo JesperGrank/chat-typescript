@@ -1,11 +1,11 @@
-import {User} from "@my-chat-app/shared"
-import {model, Schema} from "mongoose"
+import { User } from "@my-chat-app/shared"
+import { model, Schema } from "mongoose"
 const bcrypt = require('bcrypt');
 
 const UserSchema = new Schema({
-    username: {type: String, required: true, unique: true},
-    password: {type: String, required: true},
-    email: {type: String, required: true, unique: true}
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    email: { type: String, required: true, unique: true }
 })
 
 const UserModel = model<User>("User", UserSchema)
@@ -14,5 +14,25 @@ export const saveUser = async (User: User): Promise<void> => {
     const salt = await bcrypt.genSalt(10)
     User.password = await bcrypt.hash(User.password, salt)
     const newUser = new UserModel(User)
-    newUser.save()
+    const saveUser = await newUser.save()
+    if(!saveUser){
+        throw new Error()
+    }
+    
 }
+
+
+// export const loadAllUsers = async (): Promise<User[]> => {
+//     const renderAllUsers = await UserModel.find().exec()
+//     return renderAllUsers
+// }
+
+// export const findOneUser = async (username: string): Promise<User | null> => {
+//     const findUser = await UserModel.findOne({ username }).exec()
+//     return findUser
+// }
+
+
+// export const findUser = async (username: string): Promise<User | null> => {
+//     return await UserModel.findOne({ username: username }).exec();
+// }
