@@ -5,9 +5,8 @@ import axios from "axios"
 axios.defaults.baseURL = "http://localhost:3001"
 
 export default function HomePage() {
-  
+
   const [chatMessage, setChatMessage] = useState<string>("")
-  // const [userName, setUserName] = useState<string>("")
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [error, setError] = useState<string | undefined>("")
   
@@ -37,9 +36,10 @@ export default function HomePage() {
     try {
       const response = await axios.post<ChatMessage[]>("/", message)
       setMessages(response.data)
+      setChatMessage("")
     } catch (error) {
       setMessages([])
-      setError("Invalid message input")
+      setError("Missing username or invalid message input")
     }
 
   }
@@ -50,7 +50,7 @@ export default function HomePage() {
       return (<div>
         {messages && messages.map((singleMessage, index) => {
           return (
-            <div key={index}>
+            <div className="chat-messages" key={index}>
               {singleMessage.author}: {singleMessage.text} <br />
               {singleMessage.timeStamp.toString().split('T')[0].substring(0, 10)} - {singleMessage.timeStamp.toString().split('T')[1].substring(0, 5)}
             </div>
@@ -64,12 +64,14 @@ export default function HomePage() {
   return (
 
     <div>
-      <h1> This is "ChatRoom"</h1>
+      <div className='selectName'>
+      <input className="form-control" type="text" placeholder="Message" value={chatMessage} onChange={(e) => setChatMessage(e.target.value)} />
+        <button className="btn-sub" onClick={(e) => createMessage(chatMessage)}>Send message</button>
+      </div>
+      
       {output()}
-      <section>
-        <input type="text" placeholder="Message" value={chatMessage} onChange={(e) => setChatMessage(e.target.value)} />
-        <button onClick={(e) => createMessage(chatMessage)}>Send message</button>
-      </section>
+
+
     </div>
   )
 }

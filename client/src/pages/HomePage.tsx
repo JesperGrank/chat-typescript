@@ -8,7 +8,7 @@ export default function HomePage() {
   const [userName, setUserName] = useState<string>("")
   const [error, setError] = useState<string>()
 
-  const createUser = async (username: string): Promise <void> => {
+  const createUser = (username: string) => {
       console.log(username)
       if(!username || username == "" || !username.trim()){
       localStorage.removeItem("ts-webchat")
