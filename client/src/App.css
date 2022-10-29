@@ -43,3 +43,26 @@ li, a {
   text-decoration: underline;
 }
 
+.selectName{
+  display: flex;
+  align-items: stretch;
+  margin: auto;
+  width: 15vw;
+  padding: 1em;
+  background-color: rgb(142, 118, 118);
+  justify-content: space-evenly;
+  flex-direction: column;
+  align-content: space-between;
+}
+
+.form-control{
+  border-style: dotted;
+  border: 0;
+}
+
+.btn-sub {
+  flex: 1;
+  margin-top: 10px;
+}
+
+
