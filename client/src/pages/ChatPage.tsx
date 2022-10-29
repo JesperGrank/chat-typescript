@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { ChatMessage } from "@my-chat-app/shared"
 import axios from "axios"
 
-axios.defaults.baseURL = "http://localhost:3001"
+axios.defaults.baseURL = process.env.REACT_APP_CHAT_API || "http://localhost:3001"
 
 export default function HomePage() {
 
