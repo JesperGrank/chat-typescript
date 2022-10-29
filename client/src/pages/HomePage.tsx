@@ -1,81 +1,33 @@
-import {useEffect, useState} from 'react'
-import {ChatMessage} from "@my-chat-app/shared"
-import axios from "axios"
-
-axios.defaults.baseURL = "http://localhost:3001"
+import {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function HomePage() {
 
-    const [chatMessage, setChatMessage] = useState<string>("")
-    const [userName, setUserName] = useState<string>("")
-    const [messages, setMessages] = useState<ChatMessage[]>([])
-    const [error, setError] = useState<string | undefined>("")
+  const navigate = useNavigate()
 
-    const fetchMessages = async (): Promise <ChatMessage[]> => {
-      const reponse = await axios.get<ChatMessage[]>("/")
-      return reponse.data
-    }
-  
-    useEffect(() => {
-      const interval = setInterval(() => {
-        fetchMessages()
-          .then(setMessages)
-          .catch((error) => {
-            setMessages([])
-            setError("Something went wrong when fetching messages...")
-          })
-      }, 2500)
-    }, [])
-  
-    const createMessage = async (chatMessage: string, userName: string): Promise<void> => {
-      const message: ChatMessage = {
-        text: chatMessage,
-        author: userName,
-        timeStamp: new Date()
-      }
-      try{
-        const response = await axios.post<ChatMessage[]>("/", message)
-        setMessages(response.data)
-      } catch (error){
-        setMessages([])
-        setError("Invalid username and message input. Both needs to have a value.")
-      }
+  const [userName, setUserName] = useState<string>("")
+  const [error, setError] = useState<string>()
 
+  const createUser = (username: string) => {
+      console.log(username)
+      if(!username || username == "" || !username.trim()){
+      localStorage.removeItem("ts-webchat")
+      setError("You need to have a username to enter chat")
+    } else{
+      localStorage.setItem("ts-webchat", username)
+      navigate("/chat")
     }
-    const output = () => {
-      if(error){
-          return (<div>{error}</div>)
-      } else if(messages) {
-        return (<div>
-        {messages && messages.map((singleMessage, index) => {
-        return (
-          <div key={index}>
-            {singleMessage.author}: {singleMessage.text} <br/>
-            {singleMessage.timeStamp.toString().split('T')[0].substring(0,10)} - {singleMessage.timeStamp.toString().split('T')[1].substring(0, 5)}
-          </div>
-        ) 
-      })}
-      </div>)
-      } else{
-        <div>'Something went wrong fetching messages...'</div>
-      }
-    }
+  }
+
   return (
     <div>
-        {/* {messages && messages.map((singleMessage, index) => {
-        return (
-          <div key={index}>
-            {singleMessage.author}: {singleMessage.text} <br/>
-            {singleMessage.timeStamp.toString().split('T')[0].substring(0,10)} - {singleMessage.timeStamp.toString().split('T')[1].substring(0, 5)}
-          </div>
-        )
-      })} */}
-      {output()}
-      <section>
-        <input type="text" placeholder='Username' value={userName} onChange={(e) => setUserName(e.target.value)}/>
-        <input type="text" placeholder="Message" value={chatMessage} onChange={(e) => setChatMessage(e.target.value)}/>
-        <button onClick={(e) => createMessage(chatMessage, userName)}>Send message</button>  
-      </section>
+
+      <div className="selectName">
+      <label>{error ? error : "Select a username to enter chat"} </label>
+      <input className="form-control" type="text" placeholder="Username" value={userName} onChange={(e) => setUserName(e.target.value)}></input>
+      <button className="btn-sub" onClick={(e) => createUser(userName)}>Enter chat</button>
+      </div>
+        
     </div>
   )
 }

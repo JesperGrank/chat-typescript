@@ -43,3 +43,40 @@ li, a {
   text-decoration: underline;
 }
 
+.selectName{
+  display: flex;
+  align-items: stretch;
+  margin: auto;
+  width: 15vw;
+  padding: 1em;
+  background-color: rgb(255, 166, 0);
+  justify-content: space-evenly;
+  flex-direction: column;
+  align-content: space-between;
+}
+
+.form-control{
+  border-style: dotted;
+  border: 0;
+}
+
+.btn-sub {
+  flex: 1;
+  margin-top: 10px;
+}
+
+.btn-sub:hover {
+  background-color: #4CAF50;
+}
+
+.chatContainer{
+  background-color: yellow;
+  width: 80vw;
+}
+
+.chat-messages{
+  background-color: aquamarine;
+  max-width: 20%;
+  margin: 15px auto;
+  border-radius: 10px;
+}
