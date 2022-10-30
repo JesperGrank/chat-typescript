@@ -1,0 +1,20 @@
+FROM node:16-alpine
+
+WORKDIR /usr/src/app
+
+COPY ./package*.json ./
+COPY ./client/package*.json ./client/
+COPY ./shared/package*.json ./shared/
+
+RUN npm ci client
+
+COPY ./client/ ./client/
+COPY ./shared/ ./shared/
+
+ARG APP_CHAT_API
+ENV REACT_APP_CHAT_API ${APP_CHAT_API}
+RUN npm run buildFrontend
+
+EXPOSE 3000
+
+CMD ["npx", "serve", "client/build"]
