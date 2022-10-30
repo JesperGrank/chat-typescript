@@ -4,7 +4,6 @@ import dotenv from "dotenv"
 
 import { setupMongoDb } from './models/messages-repository'
 import messageController from './api/message-controller'
-import UserController from "./api/user-controller"
 
 dotenv.config()
 
@@ -16,7 +15,6 @@ const port: number = parseInt(process.env.SERVER_PORT || "3001")
 const mongoUrl: string = process.env.MONGODB_URL || "mongodb://db:27017"
 
 app.use("/", messageController)
-app.use("/register", UserController)
 
 app.listen(port, async function () {
     await setupMongoDb(mongoUrl)
