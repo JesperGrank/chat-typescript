@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      dockerfile: Dockerfile.backend
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGODB_URL=mongodb://db:27017/typescript-chat
+
+  frontend:
+    build:
+      dockerfile: Dockerfile.frontend
+      args:
+        APP_CHAT_API: http://localhost:3001
+    ports:
+      - "3000:3000"
+
+  db:
+    image: mongo:6.0.2
+    ports:
+      - "27017:27017"
+    container_name: db
+    volumes:
+      - /data/db
